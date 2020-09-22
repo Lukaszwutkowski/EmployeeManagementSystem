@@ -11,9 +11,9 @@ public class Test {
 
     public static void main(String[] args) {
 
-        ConsoleMenu consoleMenu = new ConsoleMenu();
+
+       ConsoleMenu consoleMenu = new ConsoleMenu();
         consoleMenu.startMenu();
-        SingletonCache.getInstance().getLog();
 
         LoginAdmin loginAdmin = new LoginAdmin();
         loginAdmin.loginActionPerformed();

@@ -2,6 +2,7 @@ package com.managementSystemProject.DAO;
 
 import com.managementSystemProject.Model.Employee;
 import com.managementSystemProject.Model.Manager;
+import com.managementSystemProject.Model.Team;
 
 import java.util.List;
 
@@ -15,18 +16,30 @@ public interface AdminDAO {
 
     List<Employee> getEmployeesByDepartment();
 
-    boolean addEmployee(Employee employee);
+    Employee getEmployeeById(String employeeId);
 
-    void modifyEmployee(Employee employee);
+    Manager getManagerById(String employeeId);
 
-    void deleteEmployee(Employee employee);
+    String addEmployee(Employee employee);
 
-    void addManager(Manager manager);
+    void modifyEmployee(String employeeId, Employee employee);
 
-    void modifyManager(Manager manager);
+    String deleteEmployee(String employeeId);
 
-    void deleteManager(Manager manager);
+    String addManager(Manager manager);
 
-    List<Employee> getAllManagers();
+    void modifyManager(String managerId, Manager manager);
+
+    String deleteManager(String managerId);
+
+    List<Manager> getAllManagers();
+
+    List<Manager> getManagersByDepartment();
+
+    List<Manager> getManagerByFirstName(String firstName);
+
+    List<Manager> getManagerByLastName(String lastName);
+
+    List<Team> getTeams();
 
 }

@@ -1,12 +1,11 @@
 package com.managementSystemProject.Model;
 
-import com.google.protobuf.Value;
-import org.hibernate.annotations.GenericGenerator;
+import com.managementSystemProject.Generator.IDGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
@@ -14,14 +13,12 @@ import java.util.Date;
         @NamedQuery(name = Employee.BY_FIRST_NAME, query = "select e from employees e where e.firstName = :firstName"),
         @NamedQuery(name = Employee.BY_LAST_NAME, query = "select e from employees e where e.lastName = ?1")
 })
-public class Employee implements Serializable {
+public class Employee {
 
     public static final String BY_FIRST_NAME = "byFirstName";
     public static final String BY_LAST_NAME = "byLastName";
 
     @Id
-    @GenericGenerator(name = "string_based_custom_sequence", strategy = "com.managementSystemProject.Generator.EmployeeIDGenerator")
-    @GeneratedValue(generator = "string_based_custom_sequence")
     @Column(name = "employee_id")
     private String employeeId;
 
@@ -31,8 +28,11 @@ public class Employee implements Serializable {
     @Column(name = "last_Name")
     private String lastName;
 
+    @Column(name = "telephone")
+    private int phoneNumber;
+
     @Column(name = "birth_date")
-    private Date birthdDate;
+    private LocalDate birthDate;
 
     @Column(name = "street")
     private String street;
@@ -49,11 +49,42 @@ public class Employee implements Serializable {
     @Column(name = "department")
     private String department;
 
+    @Column(name = "position")
+    private String position;
+
     @Column(name = "salary")
     private BigDecimal salary;
 
     @Column(name = "hire_date")
-    private Date hireDate;
+    private LocalDate hireDate;
+
+    @Transient
+    private String companySuffix = "xyzcompany.com";
+
+    @OneToMany
+    private List<TeamMapper> teamMappers;
+
+    public Employee(String employeeId, String email) {
+
+        this.employeeId = "EMP" + IDGenerator.randomId();
+        this.email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + department + "." + companySuffix;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(LocalDate hireDate) {
+        this.hireDate = hireDate;
+    }
 
     public String getEmployeeId() {
         return employeeId;
@@ -127,11 +158,38 @@ public class Employee implements Serializable {
         this.salary = salary;
     }
 
-    public Date getHireDate() {
-        return hireDate;
+    public int getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setHireDate(Date hireDate) {
-        this.hireDate = hireDate;
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId='" + employeeId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", birthDate=" + birthDate +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", email='" + email + '\'' +
+                ", department='" + department + '\'' +
+                ", position='" + position + '\'' +
+                ", salary=" + salary +
+                ", hireDate=" + hireDate +
+                '}';
     }
 }

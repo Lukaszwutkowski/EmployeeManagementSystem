@@ -8,6 +8,8 @@ public class LoginEmployee implements Login{
     private String userName;
     private String password;
 
+    private static final Scanner scanner = new Scanner(System.in);
+
     private static final String URL = "jdbc:mysql://localhost:3306/emp_man_sys?useLegacyDatetimeCode=false&serverTimezone=UTC";
 
     @Override
@@ -17,7 +19,6 @@ public class LoginEmployee implements Login{
             String query = "select * from users where username =? and password =?";
 
             PreparedStatement pst = connection.prepareStatement(query);
-            Scanner scanner = new Scanner(System.in);
             System.out.println("Type in your email address");
             userName = scanner.next();
             System.out.println("Type in password");
