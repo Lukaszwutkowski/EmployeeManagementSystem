@@ -12,15 +12,15 @@ public class TeamMapper {
     @Column(name = "id")
     private String mapperId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "empRefId")
     private Employee employee;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "managerRefId")
     private Manager manager;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teamRefId")
     private Team team;
 
@@ -32,6 +32,10 @@ public class TeamMapper {
 
     public Manager getManager() {
         return manager;
+    }
+
+    public String randomizeTeamMapperId() {
+        return this.mapperId = "MAP" + IDGenerator.randomId();
     }
 
     public void setManager(Manager manager) {

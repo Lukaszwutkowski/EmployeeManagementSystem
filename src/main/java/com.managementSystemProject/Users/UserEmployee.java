@@ -1,5 +1,8 @@
 package com.managementSystemProject.Users;
 
+import com.managementSystemProject.Generator.PasswordGenerator;
+import com.managementSystemProject.Model.Employee;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +19,13 @@ public class UserEmployee {
 
     @Column(name = "password")
     private String password;
+
+    public UserEmployee(String name, String password) {
+        PasswordGenerator passwordGenerator = new PasswordGenerator();
+        Employee employee = null;
+        this.name = employee.getEmail();
+        this.password = passwordGenerator.getPassword();
+    }
 
     public int getUserId() {
         return userId;

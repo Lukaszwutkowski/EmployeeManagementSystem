@@ -19,6 +19,7 @@ public class ManagerDAOImpl implements ManagerDAO{
 
     Scanner scanner = new Scanner(System.in);
 
+
     private EntityManager em;
 
     private void createEntityManager() {
@@ -47,12 +48,12 @@ public class ManagerDAOImpl implements ManagerDAO{
     }
 
     @Override
-    public Team getTeamById(int teamId) {
+    public Team getTeamById(String teamId) {
         createEntityManager();
         em.getTransaction().begin();
         Team team = em.find(Team.class, teamId);
 
-        Manager manager = teamMapperDAO.getLeader(team.getTeamId());
+        Manager manager = teamMapperDAO.getLeader((team.getTeamId()));
         team.setTeamLeader(manager.getFirstName()+" "+manager.getLastName()+" ["+manager.getManagerId()+"]");
         em.getTransaction().commit();
         closeEntityManager();
@@ -60,7 +61,7 @@ public class ManagerDAOImpl implements ManagerDAO{
     }
 
     @Override
-    public void updateTeam(int teamId, Team team) {
+    public void updateTeam(String teamId, Team team) {
         createEntityManager();
         em.getTransaction().begin();
         Team t = em.find(Team.class, teamId);
@@ -71,7 +72,7 @@ public class ManagerDAOImpl implements ManagerDAO{
     }
 
     @Override
-    public String deleteTeam(int teamId) {
+    public String deleteTeam(String teamId) {
         createEntityManager();
         em.getTransaction().begin();
         try{
@@ -91,8 +92,9 @@ public class ManagerDAOImpl implements ManagerDAO{
         return teamMapperDAO.removeTeamMember(employeeId);
     }
 
+
     @Override
-    public boolean addTeamMember(int teamId, String employeeId) {
+    public boolean addTeamMember(String teamId, String employeeId) {
         return teamMapperDAO.addTeamMember(teamId, employeeId);
     }
 }

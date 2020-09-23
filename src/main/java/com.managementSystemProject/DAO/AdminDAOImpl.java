@@ -37,8 +37,9 @@ public class AdminDAOImpl implements AdminDAO {
     @Override
     public List<Employee> getAllEmployees() {
         createEntityManager();
-        TypedQuery<Employee> employeeTypedQuery = em.createQuery("select s from employees ", Employee.class);
+        TypedQuery<Employee> employeeTypedQuery = em.createQuery("select s from Employee ", Employee.class);
         List<Employee> resultList = employeeTypedQuery.getResultList();
+        resultList.forEach(System.out::println);
         closeEntityManager();
         return resultList;
     }
@@ -49,6 +50,7 @@ public class AdminDAOImpl implements AdminDAO {
         String firstNameTmp = scanner.next();
         byFirstName.setParameter("firstName", firstNameTmp);
         List<Employee> resultList = byFirstName.getResultList();
+        resultList.forEach(System.out::println);
         return resultList;
     }
 
@@ -58,6 +60,7 @@ public class AdminDAOImpl implements AdminDAO {
         String lastNameTmp = scanner.next();
         byLastName.setParameter("lastName", lastNameTmp);
         List<Employee> resultList = byLastName.getResultList();
+        resultList.forEach(System.out::println);
         return resultList;
     }
 
@@ -65,8 +68,9 @@ public class AdminDAOImpl implements AdminDAO {
     public List<Employee> getEmployeesByDepartment() {
         createEntityManager();
         String departmentTmp = scanner.next();
-        TypedQuery<Employee> employeeTypedQuery = em.createQuery("select e from employees e where  = " + departmentTmp, Employee.class);
+        TypedQuery<Employee> employeeTypedQuery = em.createQuery("select e from Employee e where  = " + departmentTmp, Employee.class);
         List<Employee> resultList = employeeTypedQuery.getResultList();
+        resultList.forEach(System.out::println);
         closeEntityManager();
         return resultList;
     }
@@ -76,8 +80,9 @@ public class AdminDAOImpl implements AdminDAO {
         createEntityManager();
         em.getTransaction().begin();
         log.info("inside getEmployeeById methode");
-        TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employees e WHERE e.employeeId = '" + employeeId + "'", Employee.class);
+        TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e WHERE e.employeeId = '" + employeeId + "'", Employee.class);
         List<Employee> resultList = query.getResultList();
+        resultList.forEach(System.out::println);
         em.getTransaction().commit();
         closeEntityManager();
         return resultList.get(0);
@@ -88,8 +93,9 @@ public class AdminDAOImpl implements AdminDAO {
         createEntityManager();
         em.getTransaction().begin();
         log.info("inside getManagerById methode");
-        TypedQuery<Manager> query = em.createQuery("SELECT m FROM Manager m WHERE e.managerId = '" + managerId + "'", Manager.class);
+        TypedQuery<Manager> query = em.createQuery("SELECT m FROM Manager m WHERE m.managerId = '" + managerId + "'", Manager.class);
         List<Manager> resultList = query.getResultList();
+        resultList.forEach(System.out::println);
         em.getTransaction().commit();
         closeEntityManager();
         return resultList.get(0);
@@ -97,30 +103,10 @@ public class AdminDAOImpl implements AdminDAO {
 
     @Override
     public String addEmployee(Employee employee) {
-       /* String firstName = scanner.nextLine();
-        String lastName = scanner.nextLine();
-        int birthYear = scanner.nextInt();
-        int birthMonth = scanner.nextInt();
-        int birthDay = scanner.nextInt();
-        LocalDate birthDate = LocalDate.of(birthYear, birthMonth, birthDay);
-        String street = scanner.nextLine();
-        String city = scanner.nextLine();
-        String zipCode = scanner.nextLine();
-        String email = scanner.nextLine();
-        String department = scanner.nextLine();
-        BigDecimal salary = BigDecimal.valueOf(5789);
-        int hireYear = 2020;
-        int hireMonth = 04;
-        int hireDay = 12;
-        LocalDate hireDate = LocalDate.of(hireYear, hireMonth, hireDay);
-        //TypedQuery<Employee> employeeTypedQuery = em.createQuery("insert into person(first_name, last_name, birth_date) values('%s', '%s', '%s')"),
-        Employee employee = new Employee(firstName, lastName, birthDate, street, city, zipCode, email, department, salary, hireDate);
-
-        */
         createEntityManager();
         em.getTransaction().begin();
         em.persist(employee);
-        if (!employee.getEmployeeId().equals(null)) {
+        if (employee.getEmployeeId() != null) {
             message = "Employee Successfully Created.";
         }
         em.getTransaction().commit();
@@ -145,7 +131,7 @@ public class AdminDAOImpl implements AdminDAO {
         createEntityManager();
         em.getTransaction().begin();
         em.persist(manager);
-        if (!manager.getManagerId().equals(null)) {
+        if (manager.getManagerId() != null) {
             message = "Manager Successfully Created.";
         }
         em.getTransaction().commit();
@@ -199,8 +185,9 @@ public class AdminDAOImpl implements AdminDAO {
     @Override
     public List<Manager> getAllManagers() {
         createEntityManager();
-        TypedQuery<Manager> managerTypedQuery = em.createQuery("select m from Manager", Manager.class);
+        TypedQuery<Manager> managerTypedQuery = em.createQuery("select s from Manager", Manager.class);
         List<Manager> resultList = managerTypedQuery.getResultList();
+        resultList.forEach(System.out::println);
         closeEntityManager();
         return resultList;
     }
@@ -211,6 +198,7 @@ public class AdminDAOImpl implements AdminDAO {
         String departmentTmp = scanner.next();
         TypedQuery<Manager> managerTypedQuery = em.createQuery("select m from Manager m where  = " + departmentTmp, Manager.class);
         List<Manager> resultList = managerTypedQuery.getResultList();
+        resultList.forEach(System.out::println);
         closeEntityManager();
         return resultList;
     }
@@ -237,7 +225,7 @@ public class AdminDAOImpl implements AdminDAO {
             em.getTransaction().begin();
             List<Team> teams = em.createQuery("SELECT t FROM Team t Order By t.createdOn DESC",Team.class).getResultList();
         for (Team team: teams) {
-            Manager manager = teamMapperDAO.getLeader(team.getTeamId());
+            Manager manager = teamMapperDAO.getLeader((team.getTeamId()));
             team.setTeamLeader(manager.getFirstName()+" "+manager.getLastName()+" ["+manager.getManagerId()+"]"); }
             em.getTransaction().commit();
             closeEntityManager();

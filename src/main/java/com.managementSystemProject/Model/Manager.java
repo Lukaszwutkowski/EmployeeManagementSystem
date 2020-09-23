@@ -13,7 +13,17 @@ import java.time.LocalDate;
 public class Manager implements Serializable {
 
     @Id
-    @Column(name = "manager_id")
+   /* @GenericGenerator(
+            name = "book_seq",
+            strategy = "org.hibernate.on.java.generators.StringPrefixedSequenceIdGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "50"),
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "B_"),
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d")})
+    @GeneratedValue(generator = "book_seq")
+
+    */
+    @Column(name = "manager_id", unique = true, columnDefinition = "VARCHAR(64)")
     private String managerId;
 
     @Column(name = "first_name")
@@ -52,12 +62,20 @@ public class Manager implements Serializable {
     @Column(name = "hire_date")
     private LocalDate hireDate;
 
-    @Transient
-    private String companySuffix = "xyzcompany.com";
 
-    public Manager(String managerId) {
-        this.managerId = "MNG" + IDGenerator.randomId();
+    public String emailGeneratorForManager() {
+        String companySuffix = "xyzcompany.com";
+        String randomEmail = this.firstName.toLowerCase() + "." + this.lastName.toLowerCase() + "@" + this.department.toLowerCase() + "." + companySuffix;
+        return randomEmail;
     }
+
+    public Manager() {
+    }
+
+    public String randomizeManagerId() {
+        return this.managerId = "MNG" + IDGenerator.randomId();
+    }
+
 
     public String getManagerId() {
         return managerId;

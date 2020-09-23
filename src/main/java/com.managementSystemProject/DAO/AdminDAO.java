@@ -8,38 +8,38 @@ import java.util.List;
 
 public interface AdminDAO {
 
-    List<Employee> getAllEmployees();
+    List<Employee> getAllEmployees();//TODO DONE
 
-    List<Employee> findEmployeeByFirstName();
+    List<Employee> findEmployeeByFirstName();//TODO DONE
 
-    List<Employee> findEmployeeByLastName();
+    List<Employee> findEmployeeByLastName(); //TODO DONE
 
-    List<Employee> getEmployeesByDepartment();
+    List<Employee> getEmployeesByDepartment(); //TODO DONE
 
-    Employee getEmployeeById(String employeeId);
+    Employee getEmployeeById(String employeeId);//TODO DONE
 
-    Manager getManagerById(String employeeId);
+    Manager getManagerById(String employeeId); //TODO DONE
 
-    String addEmployee(Employee employee);
+    String addEmployee(Employee employee); //TODO DONE DONE
 
-    void modifyEmployee(String employeeId, Employee employee);
+    void modifyEmployee(String employeeId, Employee employee); //TODO DONE
 
-    String deleteEmployee(String employeeId);
+    String deleteEmployee(String employeeId); //TODO DONE
 
-    String addManager(Manager manager);
+    String addManager(Manager manager);//TODO DONE
 
-    void modifyManager(String managerId, Manager manager);
+    void modifyManager(String managerId, Manager manager); //TODO DONE
 
-    String deleteManager(String managerId);
+    String deleteManager(String managerId); //TODO DONE
 
-    List<Manager> getAllManagers();
+    List<Manager> getAllManagers(); //TODO DONE
 
-    List<Manager> getManagersByDepartment();
+    List<Manager> getManagersByDepartment(); //TODO DONE
 
-    List<Manager> getManagerByFirstName(String firstName);
+    List<Manager> getManagerByFirstName(String firstName); //TODO DONE
 
-    List<Manager> getManagerByLastName(String lastName);
+    List<Manager> getManagerByLastName(String lastName); //TODO DONE
 
-    List<Team> getTeams();
+    List<Team> getTeams(); //TODO DONE
 
 }

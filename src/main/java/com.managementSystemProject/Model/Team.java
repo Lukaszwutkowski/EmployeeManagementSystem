@@ -1,5 +1,7 @@
 package com.managementSystemProject.Model;
 
+import com.managementSystemProject.Generator.IDGenerator;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -9,9 +11,8 @@ import java.util.List;
 public class Team {
 
     @Id
-    @GeneratedValue
     @Column(name = "id")
-    private int teamId;
+    private String teamId;
 
     @Column(name = "team_name")
     private String teamName;
@@ -30,18 +31,26 @@ public class Team {
         this.createdOn = createdOn;
     }
 
-    @Transient
+    public Team() {
+        this.teamId = "T" + IDGenerator.randomId();
+    }
+
+    @Column(name = "team_leader")
     private String teamLeader;
 
-    @OneToMany
+    @OneToMany//(cascade = CascadeType.ALL)
     private List<TeamMapper> teamMappers;
 
+    public String randomizeTeamId() {
+        return this.teamId = "TMA" + IDGenerator.randomId();
+    }
 
-    public int getTeamId() {
+
+    public String getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
+    public void setTeamId(String teamId) {
         this.teamId = teamId;
     }
 

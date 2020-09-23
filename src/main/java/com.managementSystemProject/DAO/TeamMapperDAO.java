@@ -10,7 +10,7 @@ public interface TeamMapperDAO {
 
     boolean createTeamLeader(Team team);
 
-    Manager getLeader(int teamId);
+    Manager getLeader(String teamId);
 
     List<Employee> getTeamMembers(String teamId);
 
@@ -18,6 +18,6 @@ public interface TeamMapperDAO {
 
     boolean removeTeamMember(String employeeId);
 
-    boolean addTeamMember(int teamId, String employeeId);
+    boolean addTeamMember(String teamId, String employeeId);
 }
 

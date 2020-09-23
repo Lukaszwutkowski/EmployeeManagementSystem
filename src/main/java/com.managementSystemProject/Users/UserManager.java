@@ -1,5 +1,9 @@
 package com.managementSystemProject.Users;
 
+import com.managementSystemProject.Generator.PasswordGenerator;
+import com.managementSystemProject.Model.Employee;
+import com.managementSystemProject.Model.Manager;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +20,13 @@ public class UserManager {
 
     @Column(name = "password")
     private String password;
+
+    public UserManager(String name, String password) {
+        PasswordGenerator passwordGenerator = new PasswordGenerator();
+        Employee employee = null;
+        this.name = employee.getEmail();
+        this.password = passwordGenerator.getPassword();
+    }
 
     public int getUserId() {
         return userId;

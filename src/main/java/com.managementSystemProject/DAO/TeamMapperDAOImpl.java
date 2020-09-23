@@ -8,12 +8,16 @@ import com.managementSystemProject.Model.TeamMapper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class TeamMapperDAOImpl implements TeamMapperDAO {
+public class TeamMapperDAOImpl<EmployeeDAOImpl, TeamDAOImpl> implements TeamMapperDAO {
 
     private static Logger log = Logger.getLogger(String.valueOf(TeamMapperDAOImpl.class));
+
+    ManagerDAOImpl teamDAO;
 
     private EntityManager em;
 
@@ -26,12 +30,13 @@ public class TeamMapperDAOImpl implements TeamMapperDAO {
         em.close();
     }
 
-    AdminDAOImpl adminDAO;
+    //AdminDAOImpl adminDAO;
 
     String message = "error";
 
     @Override
     public boolean createTeamLeader(Team team) {
+        AdminDAOImpl adminDAO = new AdminDAOImpl();
         createEntityManager();
         em.getTransaction().begin();
         boolean teamLeaderAssigned = false;
@@ -54,27 +59,58 @@ public class TeamMapperDAOImpl implements TeamMapperDAO {
     }
 
     @Override
-    public Manager getLeader(int teamId) {
-        return null;
+    public Manager getLeader(String teamId) {
+        return em.createQuery("SELECT tem FROM TeamMapper tem where tem.team.teamId = '" + teamId+"' and tem.isLeader = true", TeamMapper.class).getResultList().get(0).getManager();
     }
 
     @Override
     public List<Employee> getTeamMembers(String teamId) {
-        return null;
+        List<Employee> employees = new ArrayList<>();
+
+        List<TeamMapper> mapperObjs = em.createQuery("SELECT tem FROM TeamMapper tem where tem.team.teamId = '" + teamId+"' and tem.isLeader = false", TeamMapper.class).getResultList();
+
+        for(TeamMapper obj : mapperObjs){
+            employees.add(obj.getEmployee());
+        }
+        return employees;
     }
 
     @Override
     public List<Employee> listAvaibleEmployees() {
-        return null;
+        List<Employee> availableEmployees = em.createQuery("SELECT e FROM Employee e WHERE e.employee_id NOT IN (select tem.employee.employeeId from TeamMapper tem)", Employee.class).getResultList();
+        return availableEmployees;
     }
 
     @Override
     public boolean removeTeamMember(String employeeId) {
-        return false;
+        boolean deleted = false;
+
+        Query q = em.createQuery("Delete from TeamMapper tem where tem.employee.employeeId ='"+employeeId+"'");
+        int deletedCount = q.executeUpdate();
+
+        log.info("no. of rows deleted:"+deletedCount);
+        deleted = true;
+
+        return deleted;
     }
 
     @Override
-    public boolean addTeamMember(int teamId, String employeeId) {
-        return false;
+    public boolean addTeamMember(String teamId, String employeeId) {
+        boolean teamMemberAdded = false;
+        AdminDAOImpl adminDAO = new AdminDAOImpl();
+
+        TeamMapper mapperObj = new TeamMapper();
+        mapperObj.setTeam(teamDAO.getTeamById(teamId));
+        mapperObj.setEmployee(adminDAO.getEmployeeById(employeeId));
+        mapperObj.setLeader(false);
+        mapperObj.setAssigned(true);
+
+        em.persist(mapperObj);
+
+        if(!mapperObj.getMapperId().equals(null)){
+            teamMemberAdded = true;
+        }
+
+        return teamMemberAdded;
     }
 }

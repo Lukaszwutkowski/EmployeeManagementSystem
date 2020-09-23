@@ -37,6 +37,7 @@ public class TestDAO {
 
     }
 
+
    /* public boolean addPerson() {
         // TODO poprawic ta metode tak zeby nie wymagala person_id
         createConnection();

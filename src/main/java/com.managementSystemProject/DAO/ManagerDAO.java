@@ -6,13 +6,13 @@ public interface ManagerDAO {
 
     String createTeam(Team team);
 
-    Team getTeamById(int teamId);
+    Team getTeamById(String teamId);
 
-    void updateTeam(int teamId, Team team);
+    void updateTeam(String teamId, Team team);
 
-    String deleteTeam(int teamId);
+    String deleteTeam(String teamId);
 
     boolean removeTeamMember(String employeeId);
 
-    boolean addTeamMember(int teamId, String employeeId);
+    boolean addTeamMember(String teamId, String employeeId);
 }

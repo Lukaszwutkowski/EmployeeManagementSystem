@@ -1,6 +1,7 @@
 package com.managementSystemProject.Model;
 
 import com.managementSystemProject.Generator.IDGenerator;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,8 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "employees")
 @NamedQueries({
-        @NamedQuery(name = Employee.BY_FIRST_NAME, query = "select e from employees e where e.firstName = :firstName"),
-        @NamedQuery(name = Employee.BY_LAST_NAME, query = "select e from employees e where e.lastName = ?1")
+        @NamedQuery(name = Employee.BY_FIRST_NAME, query = "select e from Employee e where e.firstName = :firstName"),
+        @NamedQuery(name = Employee.BY_LAST_NAME, query = "select e from Employee e where e.lastName = ?1")
 })
 public class Employee {
 
@@ -19,6 +20,8 @@ public class Employee {
     public static final String BY_LAST_NAME = "byLastName";
 
     @Id
+   // @GeneratedValue(generator = "uuid")
+    //@GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "employee_id")
     private String employeeId;
 
@@ -61,8 +64,20 @@ public class Employee {
     @Transient
     private String companySuffix = "xyzcompany.com";
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<TeamMapper> teamMappers;
+
+    public String emailGeneratorForEmployee() {
+        String companySuffix = "xyzcompany.com";
+        String randomEmail = this.firstName.toLowerCase() + "." + this.lastName.toLowerCase() + "@" + this.department.toLowerCase() + "." + companySuffix;
+        return randomEmail;
+    }
+
+    public String randomizeEmployeeId() {
+        return this.employeeId = "EMP" + IDGenerator.randomId();
+    }
+
+    public Employee() { }
 
     public Employee(String employeeId, String email) {
 
