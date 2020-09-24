@@ -10,13 +10,13 @@ public class LoginEmployee implements Login{
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    private static final String URL = "jdbc:mysql://localhost:3306/emp_man_sys?useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://localhost:3306/management_sys?useLegacyDatetimeCode=false&serverTimezone=UTC";
 
     @Override
     public void loginActionPerformed() {
         try {
             Connection connection = DriverManager.getConnection(URL, "root", "RootPassword95");
-            String query = "select * from users where username =? and password =?";
+            String query = "select * from emp_users where username =? and password =?";
 
             PreparedStatement pst = connection.prepareStatement(query);
             System.out.println("Type in your email address");

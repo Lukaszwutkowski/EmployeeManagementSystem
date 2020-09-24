@@ -1,12 +1,14 @@
 package com.managementSystemProject;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class Connection {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/sda_library?useLegacyDatetimeCode=false&serverTimezone=UTC";
+  /*  private static final String URL = "jdbc:mysql://localhost:3306/sda_library?useLegacyDatetimeCode=false&serverTimezone=UTC";
     private java.sql.Connection connection;
 
     private void createConnection() {
@@ -38,4 +40,6 @@ public class Connection {
     public java.sql.Connection getConnection() {
         return connection;
     }
+
+   */
 }

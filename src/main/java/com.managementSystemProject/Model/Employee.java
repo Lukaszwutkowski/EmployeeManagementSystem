@@ -1,7 +1,6 @@
 package com.managementSystemProject.Model;
 
 import com.managementSystemProject.Generator.IDGenerator;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -61,11 +60,16 @@ public class Employee {
     @Column(name = "hire_date")
     private LocalDate hireDate;
 
-    @Transient
-    private String companySuffix = "xyzcompany.com";
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "employee")
     private List<TeamMapper> teamMappers;
+
+    public List<TeamMapper> getTeamMappers() {
+        return teamMappers;
+    }
+
+    public void setTeamMappers(List<TeamMapper> teamMappers) {
+        this.teamMappers = teamMappers;
+    }
 
     public String emailGeneratorForEmployee() {
         String companySuffix = "xyzcompany.com";
@@ -78,12 +82,6 @@ public class Employee {
     }
 
     public Employee() { }
-
-    public Employee(String employeeId, String email) {
-
-        this.employeeId = "EMP" + IDGenerator.randomId();
-        this.email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + department + "." + companySuffix;
-    }
 
     public LocalDate getBirthDate() {
         return birthDate;

@@ -1,32 +1,50 @@
 package com.managementSystemProject.Users;
 
-import com.managementSystemProject.Generator.PasswordGenerator;
-import com.managementSystemProject.Model.Employee;
-import com.managementSystemProject.Model.Manager;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "man_users")
+@Access(AccessType.PROPERTY)
 public class UserManager {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", unique = true, nullable = false)
+    @Access(AccessType.FIELD)
     private int userId;
 
-    @Column(name = "user_name")
-    private String name;
+    @Column(name = "user_manager")
+    private String userName;
 
     @Column(name = "password")
     private String password;
 
-    public UserManager(String name, String password) {
-        PasswordGenerator passwordGenerator = new PasswordGenerator();
-        Employee employee = null;
-        this.name = employee.getEmail();
-        this.password = passwordGenerator.getPassword();
+
+    private EntityManager em;
+
+    private void createEntityManager() {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("my-persistence-unit");
+        em = factory.createEntityManager();
     }
+
+    private void closeEntityManager() {
+        em.close();
+    }
+
+    String message = "error";
+
+    public String addUserManager(UserManager userManager) {
+        createEntityManager();
+        em.getTransaction().begin();
+        em.persist(userManager);
+        if (userManager.getUserId() != 0) {
+            message = "User for Manager successfully Created.";
+        }
+        em.getTransaction().commit();
+        closeEntityManager();
+        return message;
+    }
+
 
     public int getUserId() {
         return userId;
@@ -36,12 +54,12 @@ public class UserManager {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {

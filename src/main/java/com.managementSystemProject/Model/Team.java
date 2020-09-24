@@ -38,7 +38,16 @@ public class Team {
     @Column(name = "team_leader")
     private String teamLeader;
 
-    @OneToMany//(cascade = CascadeType.ALL)
+    public List<TeamMapper> getTeamMappers() {
+        return teamMappers;
+    }
+
+    public void setTeamMappers(List<TeamMapper> teamMappers) {
+        this.teamMappers = teamMappers;
+    }
+
+    @OneToMany(targetEntity = TeamMapper.class, mappedBy = "team")
+    @Access(AccessType.PROPERTY)
     private List<TeamMapper> teamMappers;
 
     public String randomizeTeamId() {

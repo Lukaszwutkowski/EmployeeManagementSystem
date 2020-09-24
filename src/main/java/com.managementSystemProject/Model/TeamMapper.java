@@ -16,7 +16,7 @@ public class TeamMapper {
     @JoinColumn(name = "empRefId")
     private Employee employee;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Manager.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "managerRefId")
     private Manager manager;
 

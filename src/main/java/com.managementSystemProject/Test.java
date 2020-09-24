@@ -1,11 +1,14 @@
 package com.managementSystemProject;
 
+import com.managementSystemProject.ConsoleMenu.ConsoleMenu;
 import com.managementSystemProject.DAO.AdminDAOImpl;
 import com.managementSystemProject.DAO.ManagerDAOImpl;
 import com.managementSystemProject.DAO.TeamMapperDAOImpl;
+import com.managementSystemProject.Generator.PasswordGenerator;
 import com.managementSystemProject.Model.Employee;
 import com.managementSystemProject.Model.Manager;
 import com.managementSystemProject.Model.Team;
+import com.managementSystemProject.Users.UserEmployee;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +20,7 @@ public class Test {
 
     public static void main(String[] args) {
 
-        Employee employee = new Employee();
+       /* Employee employee = new Employee();
         employee.setEmployeeId(employee.randomizeEmployeeId());
         employee.setFirstName("Lukasz");
         employee.setLastName("Mocny");
@@ -33,7 +36,8 @@ public class Test {
         employee.setEmployeeId(employee.emailGeneratorForEmployee());
 
 
-        Manager manager = new Manager();
+
+      /*  Manager manager = new Manager();
         manager.setManagerId(manager.randomizeManagerId());
         manager.setFirstName("Mariusz");
         manager.setLastName("Konieczny");
@@ -48,25 +52,55 @@ public class Test {
         manager.setHireDate(LocalDate.of(2020, 06,01));
         manager.setEmail(manager.emailGeneratorForManager());
 
+
+
        AdminDAOImpl dao = new AdminDAOImpl();
        // dao.addManager(manager);
-       //dao.addEmployee(employee);
-        dao.getManagerById("MNG932514");
+       dao.addEmployee(employee);
+        //dao.getManagerById("MNG932514");
 
-        /*Team team = new Team();
+        PasswordGenerator passwordGenerator = new PasswordGenerator();
+        UserEmployee userEmployee = new UserEmployee(employee.getEmail(), passwordGenerator.getPassword());
+        userEmployee.addUserEmployee(userEmployee);
+
+
+
+        */
+
+       /* Team team = new Team();
         team.setTeamId(team.randomizeTeamId());
         team.setCreatedOn(LocalDate.now());
         team.setTeamDescription("Netflix");
-        team.setTeamLeader("MNG987653");
+        team.setTeamLeader("MNG932514");
         team.setTeamName("Prog");
         ManagerDAOImpl managerDAO = new ManagerDAOImpl();
         managerDAO.createTeam(team);
 
-         */
+
+        */
+
+
+
 
 
         //TeamMapperDAOImpl teamMapperDAO = new TeamMapperDAOImpl();
         //teamMapperDAO.addTeamMember();
+
+     ConsoleMenu consoleMenu = new ConsoleMenu();
+     consoleMenu.startMenu();
+
+     /*  UserEmployee userEmployee = new UserEmployee();
+        PasswordGenerator passwordGenerator = new PasswordGenerator();
+        userEmployee.setPassword(passwordGenerator.getPassword());
+        userEmployee.setUserName("adamlewek@tranzyt.xyzcompany.com");
+        userEmployee.addUserEmployee(userEmployee);
+
+      */
+
+
+
+
+
 
 
 

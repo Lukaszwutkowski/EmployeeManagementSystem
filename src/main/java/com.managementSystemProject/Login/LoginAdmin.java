@@ -24,7 +24,7 @@ public class LoginAdmin implements Login {
 
         try {
             Connection connection = DriverManager.getConnection(URL, "root", "RootPassword95");
-            String query = "select * from users where username =? and password =?";
+            String query = "select * from user_admin where user_admin =? and password =?";
 
             PreparedStatement pst = connection.prepareStatement(query);
             System.out.println("Type in your email address");
@@ -40,6 +40,7 @@ public class LoginAdmin implements Login {
                 c.correctPasswordAdmin();
             } else {
                 System.out.println("username and password is NOT correct");
+                loginActionPerformed();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

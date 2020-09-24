@@ -3,7 +3,7 @@ package com.managementSystemProject.Users;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "user_admin")
 public class UserAdmin {
 
     @Id
@@ -11,8 +11,8 @@ public class UserAdmin {
     @Column(name = "id")
     private int userId;
 
-    @Column(name = "user_name")
-    private String name;
+    @Column(name = "user_admin")
+    private String userName;
 
     @Column(name = "password")
     private String password;
@@ -21,11 +21,23 @@ public class UserAdmin {
         return userId;
     }
 
-    public String getName() {
-        return name;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
